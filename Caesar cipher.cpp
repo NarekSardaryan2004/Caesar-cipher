@@ -1,45 +1,28 @@
 #include <iostream>
-using namespace std;
+#include <string>
 
 int main()
 {
-    char message[100], encrypt[100];
-    int i;
+    int shift = 3;
+    std::string message;
+    
+    std::cout << "Enter your message: ";
+    getline(std::cin, message);
 
-    cout << "Enter a message: ";
-    cin >> message;
-
-    for (i = 0; message[i] != '\0'; i++)
-    {
-        if (message[i] >= 'a' && message[i] <= 'z')
-        {
-            if (message[i] >= 'a' && message[i] < 'x')
-            {
-                encrypt[i] = message[i] + 3;
-            }
-            else if (message[i] >= 'x' && message[i] <= 'z')
-            {
-                encrypt[i] = message[i] - 23;
-            }
+    for (size_t i = 0; i < message.size(); ++i) {
+        char ch = message[i];
+        if (ch >= 'a' && ch <= 'z') {
+            message[i] = 'a' + (ch - 'a' + shift + 26) % 26;
         }
-        else if (message[i] >= 'A' && message[i] <= 'Z')
-        {
-            if (message[i] >= 'A' && message[i] < 'X')
-            {
-                encrypt[i] = message[i] + 3;
-            }
-            else if (message[i] >= 'X' && message[i] <= 'Z')
-            {
-                encrypt[i] = message[i] - 23;
-            }
+        else if (ch >= 'A' && ch <= 'Z') {
+            message[i] = 'A' + (ch - 'A' + shift + 26) % 26;
         }
-        else
-        {
-            encrypt[i] = message[i];
+        else {
+            message[i] = ch;
         }
     }
-    encrypt[i] = '\0';
-    cout << "Encrypted message: " << encrypt << endl;
+
+    std::cout << "Encrypted: " << message << std::endl;
 
     return 0;
 }
